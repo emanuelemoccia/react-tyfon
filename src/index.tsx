@@ -1,39 +1,69 @@
 import axios from 'axios';
 import qs from 'qs';
+
 axios.defaults.baseURL = 'http://localhost';
-//axios.defaults.headers.post['content-type'] = 'application/x-www-form-urlencoded';
 console.log(axios.defaults.headers.post);
 const _ = {
   init: () => {
-    axios({
-      method: 'post',
-      url: '/oauth/token',
-      data: qs.stringify({
-        grant_type: process.env.REACT_APP_GRANT_TYPE,
-        client_id: process.env.REACT_APP_CLIENT_ID,
-        client_secret: process.env.REACT_APP_CLIENT_SECRET,
-        username: process.env.REACT_APP_APP_ID,
-        password: process.env.REACT_APP_API_KEY
-      }),
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-      }
-    })
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'post',
+        url: '/oauth/token',
+        data: qs.stringify({
+          grant_type: process.env.REACT_APP_GRANT_TYPE,
+          client_id: process.env.REACT_APP_CLIENT_ID,
+          client_secret: process.env.REACT_APP_CLIENT_SECRET,
+          username: process.env.REACT_APP_APP_ID,
+          password: process.env.REACT_APP_API_KEY
+        }),
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      }).then(response => {
+        localStorage.setItem("ty_a", response.data.access_token)
+        localStorage.setItem("ty_b", response.data.refresh_token)
+        resolve(response.data)
+      }).catch(err => {
+        reject(err);
+      });
     })
   },
-  test: () => {
-    console.log("test")
-    /* const instance = axios.create();
-    instance.get('/longRequest', {
-      timeout: 5000
-    }); */
+  checkAuth: () => {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'get',
+        url: '/api/menu?access_token='+localStorage.getItem('ty_a')
+      })
+      .then(function (response) {
+        resolve(response.data)
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+    })
+  },
+  refreshAuth: () => {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'post',
+        url: '/oauth/token',
+        data: qs.stringify({
+          grant_type: 'refresh_token',
+          client_id: process.env.REACT_APP_CLIENT_ID,
+          client_secret: process.env.REACT_APP_CLIENT_SECRET,
+          refresh_token: localStorage.getItem('ty_b')
+        }),
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      }).then(response => {
+        localStorage.setItem("ty_a", response.data.access_token)
+        localStorage.setItem("ty_b", response.data.refresh_token)
+        resolve(response.data)
+      }).catch(err => {
+        reject(err);
+      });
+    })
   }
 }
 
