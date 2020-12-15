@@ -59,5 +59,10 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "@types/qs": "^6.9.5",
+    "axios": "^0.21.0",
+    "react-axios": "^2.0.3"
+  }
 }

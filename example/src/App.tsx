@@ -1,10 +1,11 @@
 import React from 'react'
-
-import { ExampleComponent } from 'react-tyfon'
+import Tyfon from 'react-tyfon'
 import 'react-tyfon/dist/index.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  Tyfon.init();
+  Tyfon.test();
+  return <div/>
 }
 
 export default App
