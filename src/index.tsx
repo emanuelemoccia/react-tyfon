@@ -30,16 +30,22 @@ const _ = {
   },
   checkAuth: () => {
     return new Promise((resolve, reject) => {
-      axios({
-        method: 'get',
-        url: '/api/menu?access_token='+localStorage.getItem('ty_a')
-      })
-      .then(function (response) {
-        resolve(response.data)
-      })
-      .catch(function (error) {
-        reject(error);
-      });
+      const at = localStorage.getItem('ty_a');
+      if(at !== undefined){
+        axios({
+          method: 'get',
+          url: '/api/menu?access_token='+localStorage.getItem('ty_a')
+        })
+        .then(function (response) {
+          resolve(response.data)
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      } else {
+        reject(new Error("at cannot be undefined"));
+      }
+      
     })
   },
   refreshAuth: () => {
