@@ -36,3 +36,4 @@ class Example extends Component {
 ## License
 
 MIT © [FPH](https://github.com/emanuelemoccia)
+
