@@ -13,12 +13,20 @@ npm install --save react-tyfon
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import Tyfon from 'react-tyfon'
 
 import MyComponent from 'react-tyfon'
 import 'react-tyfon/dist/index.css'
 
 class Example extends Component {
+  const myFunction = () => {
+    Tyfon.init()
+    .then(response => {
+        console.log(response);
+    }).catch(err => {
+        console.log(err);
+    });
+  }
   render() {
     return <MyComponent />
   }
@@ -27,4 +35,4 @@ class Example extends Component {
 
 ## License
 
-MIT © [emanuelemoccia](https://github.com/emanuelemoccia)
+MIT © [FPH](https://github.com/emanuelemoccia)
