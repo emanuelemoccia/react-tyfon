@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 
-axios.defaults.baseURL = 'http://localhost';
+axios.defaults.baseURL = 'http://tyfon.io';
 console.log(axios.defaults.headers.post);
 const _ = {
   init: () => {
@@ -37,7 +37,8 @@ const _ = {
           url: '/api/menu?access_token='+localStorage.getItem('ty_a')
         })
         .then(function (response) {
-          resolve(response.data)
+          resolve(true)
+          //resolve(response.data)
         })
         .catch(function (error) {
           reject(error);
