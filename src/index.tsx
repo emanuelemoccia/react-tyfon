@@ -37,8 +37,7 @@ const _ = {
           url: '/api/menu?access_token='+localStorage.getItem('ty_a')
         })
         .then(function (response) {
-          resolve(true)
-          //resolve(response.data)
+          resolve(response.data)
         })
         .catch(function (error) {
           reject(error);
