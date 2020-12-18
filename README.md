@@ -9,6 +9,8 @@
 ```bash
 npm install --save react-tyfon
 ```
+## Docs
+<a href="http://docs.tyfon.io/" target="_blank">docs.tyfon.io</a>
 
 ## Usage
 
